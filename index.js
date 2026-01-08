@@ -15,6 +15,7 @@ app.use(
     origin: [
       "http://localhost:5173", 
       "https://curalink.care", // Deployed frontend
+      "hhtp://curafront.railway.internal"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
