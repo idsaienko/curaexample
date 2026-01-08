@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", 
-      "https://cura-link.vercel.app", // Deployed frontend
+      "https://curalink.care", // Deployed frontend
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
