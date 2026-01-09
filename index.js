@@ -40,13 +40,15 @@ app.use("/api/staff", staffRoutes);
 app.use("/api/llm", llmRoutes);
 
 // ✅ Listen locally
+
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, "0.0.0.0", () => console.log(`✅ Server running on port ${PORT}`));
+
 if (!PORT) {
   console.error("PORT not provided by Railway");
   process.exit(1);
 }
 
-const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, "0.0.0.0", () => console.log(`✅ Server running on port ${PORT}`));
 process.on("SIGTERM", async () => {
   console.log("SIGTERM received. Closing HTTP server and database connections...");
 
