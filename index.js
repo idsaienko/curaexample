@@ -40,9 +40,34 @@ app.use("/api/staff", staffRoutes);
 app.use("/api/llm", llmRoutes);
 
 // ✅ Listen locally
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, "0.0.0.0", () => console.log(`✅ Server running on port ${PORT}`));
+if (!PORT) {
+  console.error("PORT not provided by Railway");
+  process.exit(1);
+}
 
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, "0.0.0.0", () => console.log(`✅ Server running on port ${PORT}`));
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM received. Closing HTTP server and database connections...");
+
+  try {
+    // Stop accepting new requests
+    server.close(() => {
+      console.log("HTTP server closed");
+    });
+
+    // If you use mongoose:
+    if (mongoose && mongoose.connection) {
+      await mongoose.connection.close(false);
+      console.log("MongoDB connection closed");
+    }
+
+    process.exit(0);
+  } catch (err) {
+    console.error("Error during graceful shutdown", err);
+    process.exit(1);
+  }
+});
 
 // ✅ Export for Vercel
 module.exports = app;
