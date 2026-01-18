@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "migrate": "node migrations/20260107_convert_nutrition_and_pain.js"
+    "migrate": "node migrations/20260107_convert_nutrition_and_pain.js",
+    "delete:residents": "node scripts/deleteAllResidents.js"
   },
   "keywords": [],
   "author": "",
